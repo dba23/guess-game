@@ -4,10 +4,34 @@ import Header from "./com/Header";
 import StartGameScreen from "./screens//StartGameScreen";
 import GameOverScreen from "./screens/GameOverScreen";
 import GameScreen from "./screens/GameScreen";
+import { AppLoading } from "expo";
+import * as Font from "expo-font";
+
+const feschFont = () => {
+  Font.loadAsync({
+    "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
+    "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
+  });
+};
 
 export default function App() {
   const [userNumber, setUserNumber] = useState();
   const [numberOfRounds, setNumberOfRounds] = useState(0);
+  const [dataLoaded, setDataLoaded] = useState(false);
+
+  if (!dataLoaded) {
+    return (
+      <AppLoading
+        startAsync={feschFont}
+        onFinish={() => {
+          setDataLoaded(true);
+        }}
+        onError={(err) => {
+          console.log(err);
+        }}
+      />
+    );
+  }
   const newGameHandler = () => {
     setNumberOfRounds(0);
   };
